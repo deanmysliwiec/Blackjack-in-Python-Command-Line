@@ -2,15 +2,15 @@
 # Created from scratch by Dean Mysliwiec
 import random
 
-
+# add total to see if it is 21
 def check_total(a, b):
     return a + b
 
-
+# easier way to get random number every time
 def randomize(new):
     return random.randint(0, new)
 
-
+# get true value of face cards if applicable
 def true_value(val):
     if val == "Queen" or val == "King" or val == "Jack":
         return 10
@@ -19,24 +19,24 @@ def true_value(val):
     else:
         return int(val)
 
-
+# choose a random card from the temporary card deck
 def choose_random_card(total_card, cards_temp):
     value = cards_temp[randomize(total_card)]
     return value
 
-
+# display if user won
 def youWon(u1, c1):
     print(f"\nYou won the game with a score of {u1}, while the computer had a score of {c1}")
 
-
+# display if computer busts
 def compBusted(u1, c1):
     print(f"\nThe computer busted at {c1}! You have won with a score of {u1}!")
 
-
+# display if user busts
 def youBusted(u1, c1):
     print(f"\nYou busted at {u1}, while the computer has a score of {c1}")
 
-
+# check who won
 def didWin(u1, c1, w):
     if w is True:
         compBusted(u1, c1)
@@ -48,7 +48,8 @@ def didWin(u1, c1, w):
         print(f"It's a draw! You: {u1} , Computer: {c1}")
     else:
         print(f"The computer has won with a score of {c1}")
-
+        
+# unused but used for debugging
 def getCards():
     return card
 
@@ -59,13 +60,12 @@ card = ["Ace", "Ace", "Ace", "Ace", "2", "2", "2", "2", "3", "3", "3", "3",
         "8", "8", "8", "8", "9", "9", "9", "9", "10", "10", "10", "10", "King", "King", "King", "King",
         "Queen", "Queen", "Queen", "Queen", "Jack", "Jack", "Jack", "Jack"]
 
-
+# Start of game
 def blackjack():
     end = False
     total_cards = 51
 
     # Temporary card deck with removal
-
     cards_temp = ["Ace", "Ace", "Ace", "Ace", "2", "2", "2", "2", "3", "3", "3", "3",
                   "4", "4", "4", "4", "5", "5", "5", "5", "6", "6", "6", "6", "7", "7", "7", "7",
                   "8", "8", "8", "8", "9", "9", "9", "9", "10", "10", "10", "10", "King", "King", "King", "King",
@@ -73,14 +73,17 @@ def blackjack():
     while not end:
         # Declare starting variables
         hit = ""
-
-        # your_third = "0"
+        
+        # All of these were used during debugging
+        # your_third = "0" 
         # comp_third = "0"
         # true_third_value_comp = 0
         # true_third_value_user = 0
+        
         won = False
         users_choices = []
         comp_choices = []
+        
         # Random First Drawn Cards and Removing Drawn Cards From Deck
         your_first = choose_random_card(total_cards, cards_temp)
         cards_temp.remove(your_first)
@@ -99,10 +102,9 @@ def blackjack():
         comp_choices.append(comp_second)
         total_cards -= 1
 
-        # print(cards_temp)
+        # For debugging: print(cards_temp)
 
         # Setting True Values for Picks of "King", "Queen", "Jack", "Ace" in order to ensure addition properly
-
         # First User Pick
         true_first_value_user = true_value(your_first)
 
@@ -126,10 +128,11 @@ def blackjack():
         print(f"Your total so far is: {user_total}\n")
         print("------------------------------------\n")
         print(f"Computer's first card dealt: {comp_first}\n")
-
+        
+        # used for no more hits wanted from user
         no_more = 0
 
-        # check if user total < 21 and if so offer a hits until stop
+        # check if user total < 21 and if so offer a hits until stop, will automatically stop if total reaches over 21
         while user_total < 21 and no_more == 0:
             hit = input(f"Hit? Y or N: ").lower()
             if hit == "n":
@@ -153,7 +156,7 @@ def blackjack():
             else:
                 print("Enter a better value!\n")
 
-        # check if comp_total is less than 17 allowed, after user does hit, and pick up cards until 17 or higher
+        # check if comp_total is less than 17 allowed, after user does/does not hit, and pick up cards until 17 or higher
         while comp_total < 17 and user_total < 21:
             new_card = choose_random_card(total_cards, cards_temp)
             cards_temp.remove(new_card)
@@ -174,7 +177,8 @@ def blackjack():
         # check on win conditions in end
         print(f"Your final cards: {users_choices} \n Computers final cards: {comp_choices}")
         didWin(user_total, comp_total, won)
-
+        
+        # ask if user wants to play again
         check_end = input("\nWould you like to play again with the same deck? (Y/N) (E to End): ").lower()
         print("\n")
         if check_end == "e":
@@ -182,11 +186,13 @@ def blackjack():
             end = True
             break
         elif check_end == "y":
+            # if cards less than 10 left in deck, reset the deck
             if total_cards < 10:
                 total_cards = 51
                 print("\nLess than 10 cards remain, reshuffling deck....\n")
             else:
                 total_cards = total_cards
+            # reset all variable data
             your_first = ""
             your_second = ""
             comp_first = ""
@@ -197,10 +203,11 @@ def blackjack():
             check_end_again = input("\nWould you like to reshuffle the deck? (Y/N) (E to End): ").lower()
             print("\n")
             if check_end_again == "y":
+                # restart game from beginning easily
                 blackjack()
             elif check_end_again == "n":
                 print("\nYou could've just ended!  Good bye!")
-                end = True
+                end = True # Would not work in PyCharm so added break
                 break
             else:
                 end = True
