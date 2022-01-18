@@ -74,10 +74,10 @@ def blackjack():
         # Declare starting variables
         hit = ""
 
-        your_third = "0"
-        comp_third = "0"
-        true_third_value_comp = 0
-        true_third_value_user = 0
+        # your_third = "0"
+        # comp_third = "0"
+        # true_third_value_comp = 0
+        # true_third_value_user = 0
         won = False
         users_choices = []
         comp_choices = []
