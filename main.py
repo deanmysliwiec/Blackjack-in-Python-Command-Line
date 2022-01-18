@@ -1,5 +1,5 @@
 # BlackJack Program with Random Card Picking and Card Removal
-
+# Created from scratch by Dean Mysliwiec
 import random
 
 
